@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>data-* demo</title>
+
+    <!-- jQuery-1.11.1 -->
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+    <script type="text/javascript" src="./jquery-1.11.1.js"></script>
+
+    <!-- jQuery.Nestable -->
+    <script type="text/javascript" src="./jquery.nestable.js"></script>
+    <link type="text/css" href="./jquery.nestable.css" rel="stylesheet">
+</head>
+<body>
+    <h1>Nestable</h1>
+
+    <p>Drag &amp; drop hierarchical list with mouse and touch compatibility (jQuery plugin)</p>
+
+    <p><strong><a href="https://github.com/dbushell/Nestable">Code on GitHub</a></strong></p>
+
+<p><strong>PLEASE NOTE: I cannot provide any support or guidance beyond this README. If this code helps you that's great but I have no plans to develop Nestable beyond this demo (it's not a final product and has limited functionality). I cannot reply to any requests for help.</strong></p>
+
+    <menu id="nestable-menu">
+        <button type="button" data-action="expand-all">Expand All</button>
+        <button type="button" data-action="collapse-all">Collapse All</button>
+    </menu>
+
+    <div class="cf nestable-lists">
+
+        <div class="dd" id="nestable">
+            <ol class="dd-list">
+                <li class="dd-item" data-id="1" id="item_1" data-switch="0">
+                    <div class="dd-handle">Item 1
+                        <span class="dd-nodrag pull-right">
+                            <input type="checkbox" id="switch_1">
+                        </span>
+                    </div>
+                </li>
+                <li class="dd-item" data-id="2" id="item_2" data-switch="0">
+                    <div class="dd-handle">Item 2
+                        <span class="dd-nodrag pull-right">
+                            <input type="checkbox" id="switch_2">
+                        </span>
+                    </div>
+                    <ol class="dd-list">
+                        <li class="dd-item" data-id="3" id="item_3" data-switch="0">
+                            <div class="dd-handle">Item 3
+                            <span class="dd-nodrag pull-right">
+                                <input type="checkbox" id="switch_3">
+                            </span>
+                            </div>
+                        </li>
+                        <li class="dd-item" data-id="4" id="item_4" data-switch="0">
+                            <div class="dd-handle">Item 4
+                                <span class="dd-nodrag pull-right">
+                                    <input type="checkbox" id="switch_4">
+                                </span>
+                            </div>
+                        </li>
+                        <li class="dd-item" data-id="5" id="item_5" data-switch="0">
+                            <div class="dd-handle">Item 5
+                                <span class="dd-nodrag pull-right">
+                                    <input type="checkbox" id="switch_5">
+                                </span>
+                            </div>
+                            <ol class="dd-list">
+                                <li class="dd-item" data-id="6" id="item_6" data-switch="0">
+                                    <div class="dd-handle">Item 6
+                                        <span class="dd-nodrag pull-right">
+                                            <input type="checkbox" id="switch_6">
+                                        </span>
+                                    </div>
+                                </li>
+                                <li class="dd-item" data-id="7" id="item_7" data-switch="0">
+                                    <div class="dd-handle">Item 7
+                                        <span class="dd-nodrag pull-right">
+                                            <input type="checkbox" id="switch_7">
+                                        </span>
+                                    </div>
+                                </li>
+                                <li class="dd-item" data-id="8" id="item_8" data-switch="0">
+                                    <div class="dd-handle">Item 8
+                                        <span class="dd-nodrag pull-right">
+                                            <input type="checkbox" id="switch_8">
+                                        </span>
+                                    </div>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="dd-item" data-id="9" id="item_9" data-switch="0">
+                            <div class="dd-handle">Item 9
+                                <span class="dd-nodrag pull-right">
+                                    <input type="checkbox" id="switch_9">
+                                </span>
+                            </div>
+                        </li>
+                        <li class="dd-item" data-id="10" id="item_10" data-switch="0">
+                            <div class="dd-handle">Item 10
+                                <span class="dd-nodrag pull-right">
+                                    <input type="checkbox" id="switch_10">
+                                </span>
+                            </div>
+                        </li>
+                    </ol>
+                </li>
+                <li class="dd-item" data-id="11" id="item_11" data-switch="0">
+                    <div class="dd-handle">Item 11
+                        <span class="dd-nodrag pull-right">
+                            <input type="checkbox" id="switch_11">
+                        </span>
+                    </div>
+                </li>
+                <li class="dd-item" data-id="12" id="item_12" data-switch="0">
+                    <div class="dd-handle">Item 12
+                        <span class="dd-nodrag pull-right">
+                            <input type="checkbox" id="switch_12">
+                        </span>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <p><strong>Serialised Output (per list)</strong></p>
+
+    <textarea id="nestable-output"></textarea>
+
+    <p>&nbsp;</p>
+
+    <p class="small">Copyright &copy; <a href="http://dbushell.com/">David Bushell</a> | Made for <a href="http://www.browserlondon.com/">Browser</a></p>
+
+<script>
+
+$(function() {
+
+    var updateOutput = function(e)
+    {
+        var list   = e.length ? e : $(e.target),
+            output = list.data('output');
+        if (window.JSON) {
+            output.val(window.JSON.stringify(list.nestable('serialize')));//, null, 2));
+        } else {
+            output.val('JSON browser support required for this demo.');
+        }
+    };
+
+    // activate Nestable for list 1
+    $('#nestable').nestable({
+        group: 1
+    })
+    .on('change', updateOutput);
+
+    // output initial serialised data
+    updateOutput($('#nestable').data('output', $('#nestable-output')));
+
+    $('#nestable-menu').on('click', function(e)
+    {
+        var target = $(e.target),
+            action = target.data('action');
+        if (action === 'expand-all') {
+            $('.dd').nestable('expandAll');
+        }
+        if (action === 'collapse-all') {
+            $('.dd').nestable('collapseAll');
+        }
+    });
+
+
+    $("[id^='switch_']").on('change', function(e){
+
+        var switchid = e.target.id;
+        var itemid = switchid.replace(/switch_/,"item_");
+        itemid = "#" + itemid;
+
+        $(itemid).attr("data-switch", e.target.checked ? 1 : 0);   
+        $(itemid).data().switch = e.target.checked ? 1 : 0;        //重写缓存data-swith值
+
+        var ser = window.JSON.stringify($('#nestable').nestable('serialize'));
+        $("#nestable-output").val(ser);
+
+    });
+
+});
+</script>
+
+</body>
+</html>
