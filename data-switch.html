@@ -175,8 +175,7 @@ $(function() {
         $(itemid).attr("data-switch", e.target.checked ? 1 : 0);   
         $(itemid).data().switch = e.target.checked ? 1 : 0;        //重写缓存data-swith值
 
-        var ser = window.JSON.stringify($('#nestable').nestable('serialize'));
-        $("#nestable-output").val(ser);
+        $("#nestable-output").val(window.JSON.stringify($('#nestable').nestable('serialize')));
 
     });
 
