@@ -28,7 +28,7 @@
     <div class="cf nestable-lists">
 
         <div class="dd" id="nestable">
-            <ol class="dd-list">
+            <ol class="dd-list" id="list_0">
                 <li class="dd-item" data-id="1" id="item_1" data-switch="0">
                     <div class="dd-handle">Item 1
                         <span class="dd-nodrag pull-right">
@@ -42,11 +42,11 @@
                             <input type="checkbox" id="switch_2"/>
                         </span>
                     </div>
-                    <ol class="dd-list">
+                    <ol class="dd-list" id="list_2">
                         <li class="dd-item" data-id="3" id="item_3" data-switch="0">
                             <div class="dd-handle">Item 3
                             <span class="dd-nodrag pull-right">
-                                <input type="checkbox" id="switch_3"/>
+                                <input type="checkbox" id="switch_3" />
                             </span>
                             </div>
                         </li>
@@ -63,7 +63,7 @@
                                     <input type="checkbox" id="switch_5"/>
                                 </span>
                             </div>
-                            <ol class="dd-list">
+                            <ol class="dd-list" id="list_5">
                                 <li class="dd-item" data-id="6" id="item_6" data-switch="0">
                                     <div class="dd-handle">Item 6
                                         <span class="dd-nodrag pull-right">
@@ -147,6 +147,42 @@ $(function() {
         }
     };
 
+    var switchchange = function(e, state) {
+        var switchselector = e.length ? e.selector : e.target.id;
+        var id = switchselector.replace(/switch_/,"");
+        var id = id.replace(/#/,"");
+        var itemselector = "#item_"+id;
+        var listselector = "#list_"+id;
+
+        var checked = false;
+        if (state == undefined) {
+            checked = e.target.checked;
+        } else {
+            checked = state;
+            $(itemselector).find("input[type='checkbox']").attr("checked",checked);
+            $(switchselector).prop('checked', checked);
+        }
+
+        $(itemselector).attr("data-switch", checked ? 1 : 0);   
+        $(itemselector).data().switch = checked ? 1 : 0;        //重写缓存data-swith值
+
+        var list = $(listselector);
+        if (list.length) {
+
+            listchildren = list.children();
+            listchildren.each(function(index,child) {
+                if (child.className == "dd-item") {
+                    childid = child.id.replace(/item_/,"");
+                    switchchange($('#switch_'+childid), checked);
+                }
+
+            });
+        }
+
+        $("#nestable-output").val(window.JSON.stringify($('#nestable').nestable('serialize')));
+
+    };
+
     // activate Nestable for list 1
     $('#nestable').nestable({
         group: 1
@@ -168,19 +204,8 @@ $(function() {
         }
     });
 
+    $("[id^='switch_']").on('change', switchchange);
 
-    $("[id^='switch_']").on('change', function(e){
-
-        var switchid = e.target.id;
-        var itemid = switchid.replace(/switch_/,"item_");
-        itemid = "#" + itemid;
-
-        $(itemid).attr("data-switch", e.target.checked ? 1 : 0);   
-        $(itemid).data().switch = e.target.checked ? 1 : 0;        //重写缓存data-swith值
-
-        $("#nestable-output").val(window.JSON.stringify($('#nestable').nestable('serialize')));
-
-    });
 
 });
 </script>
