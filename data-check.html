@@ -29,91 +29,91 @@
 
         <div class="dd" id="nestable">
             <ol class="dd-list" id="list_0">
-                <li class="dd-item" data-id="1" id="item_1" data-switch="0">
+                <li class="dd-item" data-id="1" id="item_1" data-check="0">
                     <div class="dd-handle">Item 1
                         <span class="dd-nodrag pull-right">
-                            <input type="checkbox" id="switch_1"/>
+                            <input type="checkbox" id="check_1"/>
                         </span>
                     </div>
                 </li>
-                <li class="dd-item" data-id="2" id="item_2" data-switch="0">
+                <li class="dd-item" data-id="2" id="item_2" data-check="0">
                     <div class="dd-handle">Item 2
                         <span class="dd-nodrag pull-right">
-                            <input type="checkbox" id="switch_2"/>
+                            <input type="checkbox" id="check_2"/>
                         </span>
                     </div>
                     <ol class="dd-list" id="list_2">
-                        <li class="dd-item" data-id="3" id="item_3" data-switch="0">
+                        <li class="dd-item" data-id="3" id="item_3" data-check="0">
                             <div class="dd-handle">Item 3
                             <span class="dd-nodrag pull-right">
-                                <input type="checkbox" id="switch_3" />
+                                <input type="checkbox" id="check_3" />
                             </span>
                             </div>
                         </li>
-                        <li class="dd-item" data-id="4" id="item_4" data-switch="0">
+                        <li class="dd-item" data-id="4" id="item_4" data-check="0">
                             <div class="dd-handle">Item 4
                                 <span class="dd-nodrag pull-right">
-                                    <input type="checkbox" id="switch_4"/>
+                                    <input type="checkbox" id="check_4"/>
                                 </span>
                             </div>
                         </li>
-                        <li class="dd-item" data-id="5" id="item_5" data-switch="0">
+                        <li class="dd-item" data-id="5" id="item_5" data-check="0">
                             <div class="dd-handle">Item 5
                                 <span class="dd-nodrag pull-right">
-                                    <input type="checkbox" id="switch_5"/>
+                                    <input type="checkbox" id="check_5"/>
                                 </span>
                             </div>
                             <ol class="dd-list" id="list_5">
-                                <li class="dd-item" data-id="6" id="item_6" data-switch="0">
+                                <li class="dd-item" data-id="6" id="item_6" data-check="0">
                                     <div class="dd-handle">Item 6
                                         <span class="dd-nodrag pull-right">
-                                            <input type="checkbox" id="switch_6"/>
+                                            <input type="checkbox" id="check_6"/>
                                         </span>
                                     </div>
                                 </li>
-                                <li class="dd-item" data-id="7" id="item_7" data-switch="0">
+                                <li class="dd-item" data-id="7" id="item_7" data-check="0">
                                     <div class="dd-handle">Item 7
                                         <span class="dd-nodrag pull-right">
-                                            <input type="checkbox" id="switch_7"/>
+                                            <input type="checkbox" id="check_7"/>
                                         </span>
                                     </div>
                                 </li>
-                                <li class="dd-item" data-id="8" id="item_8" data-switch="0">
+                                <li class="dd-item" data-id="8" id="item_8" data-check="0">
                                     <div class="dd-handle">Item 8
                                         <span class="dd-nodrag pull-right">
-                                            <input type="checkbox" id="switch_8"/>
+                                            <input type="checkbox" id="check_8"/>
                                         </span>
                                     </div>
                                 </li>
                             </ol>
                         </li>
-                        <li class="dd-item" data-id="9" id="item_9" data-switch="0">
+                        <li class="dd-item" data-id="9" id="item_9" data-check="0">
                             <div class="dd-handle">Item 9
                                 <span class="dd-nodrag pull-right">
-                                    <input type="checkbox" id="switch_9"/>
+                                    <input type="checkbox" id="check_9"/>
                                 </span>
                             </div>
                         </li>
-                        <li class="dd-item" data-id="10" id="item_10" data-switch="0">
+                        <li class="dd-item" data-id="10" id="item_10" data-check="0">
                             <div class="dd-handle">Item 10
                                 <span class="dd-nodrag pull-right">
-                                    <input type="checkbox" id="switch_10"/>
+                                    <input type="checkbox" id="check_10"/>
                                 </span>
                             </div>
                         </li>
                     </ol>
                 </li>
-                <li class="dd-item" data-id="11" id="item_11" data-switch="0">
+                <li class="dd-item" data-id="11" id="item_11" data-check="0">
                     <div class="dd-handle">Item 11
                         <span class="dd-nodrag pull-right">
-                            <input type="checkbox" id="switch_11"/>
+                            <input type="checkbox" id="check_11"/>
                         </span>
                     </div>
                 </li>
-                <li class="dd-item" data-id="12" id="item_12" data-switch="0">
+                <li class="dd-item" data-id="12" id="item_12" data-check="0">
                     <div class="dd-handle">Item 12
                         <span class="dd-nodrag pull-right">
-                            <input type="checkbox" id="switch_12"/>
+                            <input type="checkbox" id="check_12"/>
                         </span>
                     </div>
                 </li>
@@ -147,9 +147,9 @@ $(function() {
         }
     };
 
-    var switchchange = function(e, state) {
-        var switchselector = e.length ? e.selector : e.target.id;
-        var id = switchselector.replace(/switch_/,"");
+    var checkchange = function(e, state) {
+        var checkselector = e.length ? e.selector : e.target.id;
+        var id = checkselector.replace(/check_/,"");
         var id = id.replace(/#/,"");
         var itemselector = "#item_"+id;
         var listselector = "#list_"+id;
@@ -160,11 +160,11 @@ $(function() {
         } else {
             checked = state;
             $(itemselector).find("input[type='checkbox']").attr("checked",checked);
-            $(switchselector).prop('checked', checked);
+            $(checkselector).prop('checked', checked);
         }
 
-        $(itemselector).attr("data-switch", checked ? 1 : 0);   
-        $(itemselector).data().switch = checked ? 1 : 0;        //重写缓存data-swith值
+        $(itemselector).attr("data-check", checked ? 1 : 0);   
+        $(itemselector).data().check = checked ? 1 : 0;        //重写缓存data-swith值
 
         var list = $(listselector);
         if (list.length) {
@@ -173,7 +173,7 @@ $(function() {
             listchildren.each(function(index,child) {
                 if (child.className == "dd-item") {
                     childid = child.id.replace(/item_/,"");
-                    switchchange($('#switch_'+childid), checked);
+                    checkchange($('#check_'+childid), checked);
                 }
 
             });
@@ -204,7 +204,7 @@ $(function() {
         }
     });
 
-    $("[id^='switch_']").on('change', switchchange);
+    $("[id^='check_']").on('change', checkchange);
 
 
 });
